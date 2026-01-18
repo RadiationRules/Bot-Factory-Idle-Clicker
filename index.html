@@ -1,28 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot Factory Idle Clicker</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Bot Factory Idle Clicker</title>
+<style>
+/* --- GENERAL STYLES --- */
+body, html {
+  margin:0; padding:0;
+  width:100%; height:100%;
+  font-family: 'Arial', sans-serif;
+  background:#0f0f1f;
+  overflow-x:hidden;
+  touch-action: manipulation;
+  user-select:none;
+}
+
+/* --- BACKGROUND & CONVEYOR --- */
+#background {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  background: linear-gradient(90deg,#0f0f1f,#1f1f2f);
+  overflow:hidden;
+  z-index:-1;
+}
+
+.conveyor {
+  position:absolute;
+  width:200%; height:80px;
+  background: repeating-linear-gradient(90deg, #222244, #222244 40px, #333366 40px, #333366 80px);
+  bottom:50px;
+  animation: moveConveyor 5s linear infinite;
+  border-radius:10px;
+}
+@keyframes moveConveyor {
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+/* Floating gears */
+.gear {
+  position:absolute;
+  width:20px; height:20px;
+  background:#33f;
+  border-radius:50%;
+  opacity:0.3;
+  animation: floatGear linear infinite;
+}
+@keyframes floatGear {
+  0% {transform:translateY(110%) rotate(0deg);}
+  100% {transform:translateY(-10%) rotate(360deg);}
+}
+
+/* --- STATS --- */
+#stats {
+  display:flex;
+  justify-content:space-around;
+  margin-bottom:15px;
+}
+.stat-box {
+  background:#111133;
+  padding:10px 15px;
+  border-radius:10px;
+  border:1px solid #33f;
+  min-width:80px;
+  transition:0.2s;
+}
+
+/* --- CLICK BUTTON --- */
+#clickBot {
+  width:150px; height:150px;
+  font-size:20px;
+  border:none; border-radius:50%;
+  background: #00f;
+  color:#fff;
+  box-shadow:0 0 20px #33f;
+  margin:15px auto;
+  transition:0.1s;
+}
+#clickBot:active {
+  transform:scale(0.9);
+  box-shadow:0 0 30px #66f;
+}
+
+/* --- FLOATING TEXT --- */
+.float-text {
+  position:absolute;
+  font-weight:bold;
+  color:#0ff;
+  pointer-events:none;
+  user-select:none;
+  animation: floatUp 1s forwards;
+}
+@keyframes floatUp {
+  0% {opacity:1; transform:translateY(0) scale(1);}
+  100% {opacity:0; transform:translateY(-80px) scale(1.5);}
+}
+
+/* --- UPGRADES --- */
+#upgrades {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:20px;
+}
+.upgrade {
+  padding:10px;
+  background:#111133;
+  border:1px solid #33f;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.2s;
+}
+.upgrade:hover {
+  box-shadow:0 0 15px #33f;
+  transform:scale(1.05);
+}
+
+/* --- PRESTIGE BUTTON --- */
+#prestige {
+  margin-top:15px;
+  background:#0ff;
+  color:#111;
+  font-weight:bold;
+}
+
+/* --- PARTICLES --- */
+.particle {
+  position:absolute;
+  width:5px; height:5px;
+  background:#0ff;
+  border-radius:50%;
+  opacity:0.8;
+  pointer-events:none;
+  animation: rise 1s forwards;
+}
+@keyframes rise {
+  0% {opacity:1; transform:translate(0,0);}
+  100% {opacity:0; transform:translate(calc(-50px + 100px*var(--rand)), -80px);}
+}
+
+/* --- MOVING BOTS --- */
+.botSprite {
+  position:absolute;
+  font-size:24px;
+  animation: moveBot linear infinite;
+}
+@keyframes moveBot {
+  0%{transform:translateX(-50px);}
+  100%{transform:translateX(100vw);}
+}
+
+/* --- MOBILE FRIENDLY --- */
+button {font-size:16px; min-height:50px;}
+</style>
 </head>
 <body>
-    <div id="game-container">
-        <h1>🤖 Bot Factory Idle Clicker</h1>
-        <div id="stats">
-            <p>Bots: <span id="botCount">0</span></p>
-            <p>Coins: <span id="coinCount">0</span></p>
-        </div>
-        <button id="clickBot">Build Bot 🤖</button>
 
-        <h2>Upgrades</h2>
-        <div id="upgrades">
-            <button class="upgrade" id="upgradeClick">Increase Click (+1) - Cost: <span id="upgradeClickCost">10</span> coins</button>
-            <button class="upgrade" id="upgradeIdle">Increase Idle (+1/sec) - Cost: <span id="upgradeIdleCost">20</span> coins</button>
-            <button class="upgrade" id="prestige">Prestige (Reset for +1x multiplier) - Req: <span id="prestigeReq">50 bots</span></button>
-        </div>
-    </div>
+<div id="background"></div>
+<div class="conveyor"></div>
 
-    <script src="script.js"></script>
+<div id="game-container">
+  <h1>🤖 Bot Factory Idle Clicker</h1>
+
+  <div id="stats">
+    <div class="stat-box">Bots: <span id="botCount">0</span></div>
+    <div class="stat-box">Coins: <span id="coinCount">0</span></div>
+  </div>
+
+  <button id="clickBot">🤖 Build Bot</button>
+
+  <div id="upgrades">
+    <div class="upgrade" id="upgradeClick">Increase Click (+1) - Cost: <span id="upgradeClickCost">10</span> coins</div>
+    <div class="upgrade" id="upgradeIdle">Increase Idle (+1/sec) - Cost: <span id="upgradeIdleCost">20</span> coins</div>
+    <div class="upgrade" id="prestige">Prestige x2 - Req: <span id="prestigeReq">50 bots</span></div>
+  </div>
+</div>
+
+<script>
+// --- GAME STATE ---
+let game = {
+  bots:0,
+  coins:0,
+  clickPower:1,
+  idlePower:0,
+  prestigeMultiplier:1,
+  upgradeClickCost:10,
+  upgradeIdleCost:20,
+  prestigeReq:50
+};
+
+// --- DOM ELEMENTS ---
+const botCountEl = document.getElementById("botCount");
+const coinCountEl = document.getElementById("coinCount");
+const clickBtn = document.getElementById("clickBot");
+const upgradeClickBtn = document.getElementById("upgradeClick");
+const upgradeIdleBtn = document.getElementById("upgradeIdle");
+const prestigeBtn = document.getElementById("prestige");
+const upgradeClickCostEl = document.getElementById("upgradeClickCost");
+const upgradeIdleCostEl = document.getElementById("upgradeIdleCost");
+const prestigeReqEl = document.getElementById("prestigeReq");
+const gameContainer = document.getElementById("game-container");
+const background = document.getElementById("background");
+
+// --- LOAD GAME ---
+if(localStorage.getItem("botFactoryGame")){
+  game = JSON.parse(localStorage.getItem("botFactoryGame"));
+  updateDisplay();
+}
+
+// --- CLICK BOT ---
+clickBtn.addEventListener("click", e=>{
+  addBots(game.clickPower*game.prestigeMultiplier);
+  createParticles(clickBtn, 5);
+  spawnMovingBot();
+});
+
+// --- ADD BOTS ---
+function addBots(amount){
+  game.bots += amount;
+  game.coins += amount;
+  createFloatingText(`+${amount} 🤖`, clickBtn);
+  flyCoins(amount);
+  updateDisplay();
+}
+
+// --- FLOATING TEXT ---
+function createFloatingText(text,target){
+  const el = document.createElement("div");
+  el.className="float-text";
+  el.textContent=text;
+  const rect = target.getBoundingClientRect();
+  el.style.left=(rect.left+rect.width/2-20)+"px";
+  el.style.top=(rect.top-30)+"px";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1000);
+}
+
+// --- PARTICLES ---
+function createParticles(target,count){
+  const rect = target.getBoundingClientRect();
+  for(let i=0;i<count;i++){
+    const p = document.createElement("div");
+    p.className="particle";
+    p.style.left=(rect.left+rect.width/2)+"px";
+    p.style.top=(rect.top+rect.height/2)+"px";
+    p.style.setProperty('--rand',Math.random());
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),1000);
+  }
+}
+
+// --- FLY COINS TO COUNTER ---
+function flyCoins(amount){
+  const rect = clickBtn.getBoundingClientRect();
+  for(let i=0;i<Math.min(amount,10);i++){
+    const c = document.createElement("div");
+    c.className="particle";
+    c.style.background="#ff0";
+    c.style.left=(rect.left+rect.width/2)+"px";
+    c.style.top=(rect.top+rect.height/2)+"px";
+    c.style.setProperty('--rand',Math.random());
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1000);
+  }
+}
+
+// --- MOVING BOT ON CONVEYOR ---
+function spawnMovingBot(){
+  const bot = document.createElement("div");
+  bot.className="botSprite";
+  bot.textContent="🤖";
+  bot.style.top=(window.innerHeight-90+Math.random()*40)+"px";
+  document.body.appendChild(bot);
+  setTimeout(()=>bot.remove(),5000);
+}
+
+// --- UPGRADES ---
+upgradeClickBtn.addEventListener("click",()=>{
+  if(game.coins>=game.upgradeClickCost){
+    game.coins-=game.upgradeClickCost;
+    game.clickPower+=1;
+    game.upgradeClickCost=Math.floor(game.upgradeClickCost*1.5);
+    updateDisplay();
+  }
+});
+upgradeIdleBtn.addEventListener("click",()=>{
+  if(game.coins>=game.upgradeIdleCost){
+    game.coins-=game.upgradeIdleCost;
+    game.idlePower+=1;
+    game.upgradeIdleCost=Math.floor(game.upgradeIdleCost*1.5);
+    updateDisplay();
+  }
+});
+prestigeBtn.addEventListener("click",()=>{
+  if(game.bots>=game.prestigeReq){
+    game.bots=0; game.coins=0;
+    game.clickPower=1; game.idlePower=0;
+    game.prestigeMultiplier*=2;
+    game.upgradeClickCost=10;
+    game.upgradeIdleCost=20;
+    updateDisplay();
+    alert(`Prestige activated! Multiplier is now x${game.prestigeMultiplier}`);
+    createParticles(prestigeBtn,20);
+  }
+});
+
+// --- IDLE PRODUCTION ---
+setInterval(()=>{
+  if(game.idlePower>0){
+    addBots(game.idlePower*game.prestigeMultiplier);
+    spawnMovingBot();
+  }
+},1000);
+
+// --- UPDATE DISPLAY ---
+function updateDisplay(){
+  botCountEl.textContent=game.bots;
+  coinCountEl.textContent=game.coins;
+  upgradeClickCostEl.textContent=game.upgradeClickCost;
+  upgradeIdleCostEl.textContent=game.upgradeIdleCost;
+  prestigeReqEl.textContent=game.prestigeReq;
+  saveGame();
+}
+
+// --- SAVE GAME ---
+function saveGame(){
+  localStorage.setItem("botFactoryGame",JSON.stringify(game));
+}
+
+// --- BACKGROUND GEARS ---
+for(let i=0;i<15;i++){
+  const gear = document.createElement("div");
+  gear.className="gear";
+  gear.style.left=Math.random()*100+"%";
+  gear.style.width=(10+Math.random()*20)+"px";
+  gear.style.height=gear.style.width;
+  gear.style.animationDuration=(5+Math.random()*10)+"s";
+  background.appendChild(gear);
+}
+</script>
 </body>
 </html>
