@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Factory Idle Clicker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>🤖 Bot Factory Idle Clicker</h1>
+        <div id="stats">
+            <p>Bots: <span id="botCount">0</span></p>
+            <p>Coins: <span id="coinCount">0</span></p>
+        </div>
+        <button id="clickBot">Build Bot 🤖</button>
+
+        <h2>Upgrades</h2>
+        <div id="upgrades">
+            <button class="upgrade" id="upgradeClick">Increase Click (+1) - Cost: <span id="upgradeClickCost">10</span> coins</button>
+            <button class="upgrade" id="upgradeIdle">Increase Idle (+1/sec) - Cost: <span id="upgradeIdleCost">20</span> coins</button>
+            <button class="upgrade" id="prestige">Prestige (Reset for +1x multiplier) - Req: <span id="prestigeReq">50 bots</span></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
