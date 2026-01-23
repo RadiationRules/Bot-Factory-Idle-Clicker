@@ -57,6 +57,8 @@ body {
 @keyframes scaleUp { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes glow { 0%, 100% { filter: drop-shadow(0 0 8px rgba(255,213,79,0.4)); } 50% { filter: drop-shadow(0 0 16px rgba(255,213,79,0.8)); } }
 
+@keyframes robotPulse { 0%, 100% { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset -12px -12px 36px rgba(0, 0, 0, 0.3), inset 12px 12px 36px rgba(255, 255, 255, 0.2), 0 0 50px rgba(100, 181, 246, 0.4); } 50% { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset -12px -12px 36px rgba(0, 0, 0, 0.3), inset 12px 12px 36px rgba(255, 255, 255, 0.2), 0 0 80px rgba(100, 181, 246, 0.7); } }
+
 /* TOP BAR */
 header {
   position: absolute;
@@ -155,11 +157,10 @@ h1 {
 }
 
 .icon-btn:hover {
-  transform: translateY(-4px) scale(1.1);
-  box-shadow: 0 8px 20px rgba(255, 213, 79, 0.35), inset 0 1px 3px rgba(255, 255, 255, 0.4);
-  border-color: rgba(255, 213, 79, 0.8);
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(255, 213, 79, 0.3), inset 0 1px 3px rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 213, 79, 0.7);
   background: linear-gradient(135deg, #9abbcc, #aaccdd);
-  animation: bounce 0.6s ease-in-out;
 }
 
 .icon-btn:hover::before {
@@ -167,8 +168,8 @@ h1 {
 }
 
 .icon-btn:active {
-  transform: translateY(-2px) scale(0.96);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .icon-btn svg {
@@ -230,9 +231,9 @@ h1 {
 }
 
 #robot:hover {
-  transform: translate(-50%, -50%) scale(1.15);
-  box-shadow: 0 28px 60px rgba(76, 175, 255, 0.5), inset -12px -12px 36px rgba(0, 0, 0, 0.3), inset 12px 12px 36px rgba(255, 255, 255, 0.3);
-  animation: float 4s ease-in-out infinite, wiggle 0.3s ease-in-out infinite;
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 24px 48px rgba(76, 175, 255, 0.4), inset -12px -12px 36px rgba(0, 0, 0, 0.3), inset 12px 12px 36px rgba(255, 255, 255, 0.3);
+  animation: float 4s ease-in-out infinite;
 }
 
 #robot:active {
@@ -351,16 +352,15 @@ h1 {
 }
 
 .upgrade:hover {
-  transform: translateY(-6px) scale(1.05);
-  border-color: rgba(255, 213, 79, 0.7);
-  box-shadow: 0 10px 24px rgba(255, 213, 79, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  transform: scale(1.04);
+  border-color: rgba(255, 213, 79, 0.6);
+  box-shadow: 0 6px 16px rgba(255, 213, 79, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.2);
   background: linear-gradient(135deg, #7a9aba 0%, #6a8aaa 100%);
-  animation: bounce 0.5s ease-in-out;
 }
 
 .upgrade:active {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 213, 79, 0.15);
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(255, 213, 79, 0.1);
 }
 
 .upgrade span {
@@ -370,6 +370,58 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.upgrade-description {
+  font-size: 11px;
+  color: #a8d5ff;
+  margin-top: 4px;
+  opacity: 0.85;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.upgrade-name {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #ffd54f, #ff9f1c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.upgrade-cost {
+  font-size: 13px;
+  font-weight: 800;
+  color: #4caf50;
+  text-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+  letter-spacing: 1px;
+}
+
+.rebirth-btn {
+  background: linear-gradient(135deg, #6a5aaa 0%, #5a4a9a 100%) !important;
+  border-color: rgba(200, 150, 255, 0.4) !important;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.rebirth-btn:hover {
+  background: linear-gradient(135deg, #7a6aba 0%, #6a5aaa 100%) !important;
+  border-color: rgba(200, 150, 255, 0.7) !important;
+  box-shadow: 0 6px 16px rgba(200, 150, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+}
+
+.rebirth-subtitle {
+  display: block;
+  font-size: 12px;
+  color: #d8b3ff;
+  margin-top: 6px;
+  opacity: 0.8;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 /* RIGHT SIDEBAR */
@@ -670,47 +722,97 @@ h1 {
 <h3 style="padding: 20px 20px 12px 20px; margin: 0;">Upgrades</h3>
 <div style="overflow-y: auto; padding: 0 12px 12px 12px; flex: 1;">
 <div class="upgrade" onclick="buyClick()">
-  <span class="upgrade-name">Stronger Click</span>
-  <span class="upgrade-cost"><span id="clickCost">10</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Stronger Click</span>
+      <div class="upgrade-description">+1 Bot per click</div>
+    </div>
+    <span class="upgrade-cost"><span id="clickCost">10</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buyAuto()">
-  <span class="upgrade-name">Auto Builder</span>
-  <span class="upgrade-cost"><span id="autoCost">50</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Auto Builder</span>
+      <div class="upgrade-description">+1 Bots per second</div>
+    </div>
+    <span class="upgrade-cost"><span id="autoCost">50</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buyMega()">
-  <span class="upgrade-name">Mega Click</span>
-  <span class="upgrade-cost"><span id="megaCost">250</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Mega Click</span>
+      <div class="upgrade-description">+5 Bonus per click</div>
+    </div>
+    <span class="upgrade-cost"><span id="megaCost">250</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buyBot()">
-  <span class="upgrade-name">Bot Assistant</span>
-  <span class="upgrade-cost"><span id="botCost">100</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Bot Assistant</span>
+      <div class="upgrade-description">+2 Bots/sec & boost</div>
+    </div>
+    <span class="upgrade-cost"><span id="botCost">100</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buyMultiplier()">
-  <span class="upgrade-name">Click Multiplier</span>
-  <span class="upgrade-cost"><span id="multiplierCost">500</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Click Multiplier</span>
+      <div class="upgrade-description">+0.5x multiplier</div>
+    </div>
+    <span class="upgrade-cost"><span id="multiplierCost">500</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buySuper()">
-  <span class="upgrade-name">Super Bot</span>
-  <span class="upgrade-cost"><span id="superCost">1000</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Super Bot</span>
+      <div class="upgrade-description">+8 mega & +3 auto</div>
+    </div>
+    <span class="upgrade-cost"><span id="superCost">1000</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buyFactory()">
-  <span class="upgrade-name">Factory Upgrade</span>
-  <span class="upgrade-cost"><span id="factoryCost">200</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Factory Upgrade</span>
+      <div class="upgrade-description">+1 auto, +0.5 click</div>
+    </div>
+    <span class="upgrade-cost"><span id="factoryCost">200</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buyMomentum()">
-  <span class="upgrade-name">Momentum Boost</span>
-  <span class="upgrade-cost"><span id="momentumCost">750</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Momentum Boost</span>
+      <div class="upgrade-description">+10 mega, +0.8x</div>
+    </div>
+    <span class="upgrade-cost"><span id="momentumCost">750</span></span>
+  </div>
 </div>
 <div class="upgrade" onclick="buyLegendary()">
-  <span class="upgrade-name">Legendary Power</span>
-  <span class="upgrade-cost"><span id="legendaryCost">2500</span></span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Legendary Power</span>
+      <div class="upgrade-description">1.5x click, 1.3x auto</div>
+    </div>
+    <span class="upgrade-cost"><span id="legendaryCost">2500</span></span>
+  </div>
 </div>
 </div>
 </div>
 
 <div class="panel upgrade rebirth-btn" onclick="doRebirth()" style="margin-top: 12px;">
-  <span class="upgrade-name">Rebirth</span>
-  <span class="upgrade-cost">1K+</span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div>
+      <span class="upgrade-name">Rebirth</span>
+      <div class="upgrade-description">Reset & earn bonuses</div>
+    </div>
+    <span class="upgrade-cost">1K+</span>
+  </div>
   <span class="rebirth-subtitle">Restart with bonuses</span>
 </div>
 </div>
@@ -993,7 +1095,7 @@ function closeModals(){document.querySelectorAll('.modal').forEach(m=>m.style.di
 
 // SAVE + OFFLINE
 function save(){localStorage.setItem('save',JSON.stringify({bots,perClick,autoBots,megaClick,clickCost,autoCost,megaCost,botLevel,botCost,multiplier,multiplierCost,superLevel,superCost,factoryLevel,factoryCost,momentumLevel,momentumCost,legendaryLevel,legendaryCost,milestone,time:Date.now(),sound,music,soundVolume,musicVolume,dailyStreak,lastDailyClaimTime}))}
-function load(){const d=JSON.parse(localStorage.getItem('save'));if(!d)return;Object.assign({bots,perClick,autoBots,megaClick,clickCost,autoCost,megaCost,botLevel,botCost,multiplier,multiplierCost,superLevel,superCost,factoryLevel,factoryCost,momentumLevel,momentumCost,legendaryLevel,legendaryCost,milestone,sound,music,soundVolume,musicVolume,dailyStreak,lastDailyClaimTime},d);const diff=Math.floor((Date.now()-d.time)/1000);const earned=diff*autoBots;if(earned>0){bots+=earned;el('offlineText').textContent=`You earned <span style="background:linear-gradient(135deg,#4caf50,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;">${earned} Bots</span> while away!`;el('offlineModal').style.display='flex'}}
+function load(){const d=JSON.parse(localStorage.getItem('save'));if(!d)return;bots=d.bots;perClick=d.perClick;autoBots=d.autoBots;megaClick=d.megaClick;clickCost=d.clickCost;autoCost=d.autoCost;megaCost=d.megaCost;botLevel=d.botLevel;botCost=d.botCost;multiplier=d.multiplier;multiplierCost=d.multiplierCost;superLevel=d.superLevel;superCost=d.superCost;factoryLevel=d.factoryLevel;factoryCost=d.factoryCost;momentumLevel=d.momentumLevel;momentumCost=d.momentumCost;legendaryLevel=d.legendaryLevel;legendaryCost=d.legendaryCost;milestone=d.milestone;sound=d.sound;music=d.music;soundVolume=d.soundVolume;musicVolume=d.musicVolume;dailyStreak=d.dailyStreak;lastDailyClaimTime=d.lastDailyClaimTime;const diff=Math.floor((Date.now()-d.time)/1000);const earned=diff*autoBots;if(earned>0){bots+=earned;el('offlineText').textContent=`You earned <span style="background:linear-gradient(135deg,#4caf50,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;">${earned} Bots</span> while away!`;el('offlineModal').style.display='flex'}}
 load();updateUI();
 
 // REWARDED AD
