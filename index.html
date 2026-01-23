@@ -622,6 +622,11 @@ h1 {
     <path d="M16 2v4M8 2v4M3 10h18"/>
   </svg>
 </div>
+<div class="icon-btn" onclick="openAchievements()" title="Achievements">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M6 9l6-7.5 6 7.5M5 9h14M7 10.5h10M6 19h12a2 2 0 002-2V9a2 2 0 00-2-2h-3l-2-2.5L10 7H7a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+  </svg>
+</div>
 <div class="icon-btn" onclick="openLeaderboard()" title="Leaderboard">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <rect x="3" y="12" width="4" height="8" rx="1"/>
@@ -650,6 +655,17 @@ h1 {
 </div>
 
 <div>
+<div class="panel" style="padding: 16px; display: flex; gap: 16px; margin-bottom: 12px;">
+  <div style="flex: 1; padding: 12px; background: rgba(100,181,246,0.15); border-radius: 10px; border: 1px solid rgba(100,181,246,0.4); text-align: center;">
+    <div style="font-size: 12px; color: #aaa; margin-bottom: 6px;">📈 Milestones</div>
+    <div style="font-size: 24px; font-weight: 900; background: linear-gradient(135deg, #ffd54f, #ff9f1c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" id="milestone">1</div>
+  </div>
+  <div style="flex: 1; padding: 12px; background: rgba(76,175,80,0.15); border-radius: 10px; border: 1px solid rgba(76,175,80,0.4); text-align: center;">
+    <div style="font-size: 12px; color: #aaa; margin-bottom: 6px;">🏆 Achievements</div>
+    <div style="font-size: 24px; font-weight: 900; background: linear-gradient(135deg, #64b5f6, #42a5f5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;" id="achievements">3/6</div>
+  </div>
+</div>
+
 <div class="panel" style="padding: 0; overflow: hidden; flex: 1; display: flex; flex-direction: column;">
 <h3 style="padding: 20px 20px 12px 20px; margin: 0;">Upgrades</h3>
 <div style="overflow-y: auto; padding: 0 12px 12px 12px; flex: 1;">
@@ -710,6 +726,70 @@ h1 {
       <div id="dailyTimer" style="font-size: 20px; font-weight: 900; color: var(--accent-primary); margin-top: 8px;">23:59:59</div>
     </div>
     <button onclick="claimDaily()">Claim Reward</button>
+  </div>
+</div>
+
+<!-- ACHIEVEMENTS MODAL -->
+<div class="modal" id="achModal">
+  <div class="modal-box" style="max-width: 580px;">
+    <h3>🏆 Achievements</h3>
+    <div style="margin: 20px 0; max-height: 400px; overflow-y: auto;">
+      <div class="achievement-item" style="padding: 16px; margin-bottom: 12px; background: rgba(76,175,80,0.1); border: 2px solid rgba(76,175,80,0.4); border-radius: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 16px; font-weight: 700;">First Click ✨</div>
+            <div style="font-size: 12px; color: #aaa; margin-top: 4px;">Click the robot for the first time</div>
+          </div>
+          <div style="font-size: 24px;">✅</div>
+        </div>
+      </div>
+      <div class="achievement-item" style="padding: 16px; margin-bottom: 12px; background: rgba(76,175,80,0.1); border: 2px solid rgba(76,175,80,0.4); border-radius: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 16px; font-weight: 700;">100 Bots 🤖</div>
+            <div style="font-size: 12px; color: #aaa; margin-top: 4px;">Accumulate 100 Bots</div>
+          </div>
+          <div style="font-size: 24px;">✅</div>
+        </div>
+      </div>
+      <div class="achievement-item" style="padding: 16px; margin-bottom: 12px; background: rgba(76,175,80,0.1); border: 2px solid rgba(76,175,80,0.4); border-radius: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 16px; font-weight: 700;">Big Spender 💰</div>
+            <div style="font-size: 12px; color: #aaa; margin-top: 4px;">Buy 10 upgrades</div>
+          </div>
+          <div style="font-size: 24px;">✅</div>
+        </div>
+      </div>
+      <div class="achievement-item" style="padding: 16px; margin-bottom: 12px; background: rgba(100,100,100,0.1); border: 2px solid rgba(100,100,100,0.4); border-radius: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 16px; font-weight: 700;">Mega Clicker 💥</div>
+            <div style="font-size: 12px; color: #aaa; margin-top: 4px;">Use Mega Click 100 times</div>
+          </div>
+          <div style="font-size: 24px;">❓</div>
+        </div>
+      </div>
+      <div class="achievement-item" style="padding: 16px; margin-bottom: 12px; background: rgba(100,100,100,0.1); border: 2px solid rgba(100,100,100,0.4); border-radius: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 16px; font-weight: 700;">Reborn 🔄</div>
+            <div style="font-size: 12px; color: #aaa; margin-top: 4px;">Complete your first Rebirth</div>
+          </div>
+          <div style="font-size: 24px;">❓</div>
+        </div>
+      </div>
+      <div class="achievement-item" style="padding: 16px; margin-bottom: 12px; background: rgba(100,100,100,0.1); border: 2px solid rgba(100,100,100,0.4); border-radius: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-size: 16px; font-weight: 700;">Legendary Master 👑</div>
+            <div style="font-size: 12px; color: #aaa; margin-top: 4px;">Unlock Legendary Power</div>
+          </div>
+          <div style="font-size: 24px;">❓</div>
+        </div>
+      </div>
+    </div>
+    <button onclick="closeModals()" style="width: 100%;">Close</button>
   </div>
 </div>
 
