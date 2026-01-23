@@ -10,14 +10,14 @@
 
 <style>
 :root {
-  --bg1:#0f1419;
-  --bg2:#1a1f2e;
-  --bg3:#242d3d;
-  --panel:#1e2635;
+  --bg1:#2a3a4a;
+  --bg2:#3a4a5a;
+  --bg3:#4a5a6a;
+  --panel:#4a5a6a;
   --accent:#ffd54f;
   --accent2:#ff9f1c;
   --accent3:#64b5f6;
-  --outline:#0a0e14;
+  --outline:#1f2a35;
   --success:#4caf50;
 }
 
@@ -28,7 +28,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, sans-serif;
-  background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0d101a 100%);
+  background: linear-gradient(135deg, #2a3a4a 0%, #3a4a5a 50%, #1f2a35 100%);
   color: #fff;
   overflow: hidden;
   height: 100vh;
@@ -44,13 +44,15 @@ body {
 @keyframes shake { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(-3px, -3px) rotate(-0.5deg); } 75% { transform: translate(3px, 3px) rotate(0.5deg); } }
 @keyframes coinFloat { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-80px) scale(0); opacity: 0; } }
 @keyframes fadeInScale { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes ripple { 0% { transform: scale(0); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
 @keyframes clickExplode { 0% { transform: scale(1) rotate(0deg); opacity: 1; } 100% { transform: scale(1.8) rotate(180deg); opacity: 0; } }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
 @keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.2); } 50% { transform: scale(1); } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes scaleUp { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes glow { 0%, 100% { filter: drop-shadow(0 0 8px rgba(255,213,79,0.4)); } 50% { filter: drop-shadow(0 0 16px rgba(255,213,79,0.8)); } }
 
 /* TOP BAR */
 header {
@@ -58,30 +60,39 @@ header {
   top: 12px;
   left: 12px;
   right: 12px;
-  height: 72px;
-  background: linear-gradient(135deg, #1e2635 0%, #252d3d 100%);
-  border-radius: 16px;
-  border: 2px solid rgba(255, 213, 79, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  height: 80px;
+  background: linear-gradient(135deg, #4a5a6a 0%, #5a6a7a 100%);
+  border-radius: 18px;
+  border: 3px solid rgba(255, 213, 79, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
+  padding: 0 32px;
   z-index: 100;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 36px;
   font-weight: 900;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   margin: 0;
-  background: linear-gradient(135deg, #ffd54f, #ff9f1c);
+  background: linear-gradient(135deg, #ffd54f, #ff9f1c, #ff6b6b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 2px 8px rgba(255, 213, 79, 0.3);
-  animation: float 3s ease-in-out infinite;
+  text-shadow: 
+    0 4px 0 rgba(0, 0, 0, 0.5),
+    0 8px 12px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(255, 213, 79, 0.5);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  animation: float 3s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 4px 0 rgba(0, 0, 0, 0.5), 0 8px 12px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 213, 79, 0.5); }
+  50% { text-shadow: 0 4px 0 rgba(0, 0, 0, 0.5), 0 8px 12px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 213, 79, 0.8); }
 }
 
 .top-right {
@@ -91,31 +102,36 @@ h1 {
 }
 
 #bots, .currency {
-  font-size: 20px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #64b5f6, #42a5f5);
+  font-size: 22px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #64b5f6, #42a5f5, #2196f3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  text-shadow: 
+    0 2px 0 rgba(0, 0, 0, 0.6),
+    0 4px 8px rgba(33, 150, 243, 0.3);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 }
 
 /* ICON BUTTONS */
 .icon-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
   background: linear-gradient(135deg, #2a3847, #1f2935);
-  border: 2px solid rgba(255, 213, 79, 0.3);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(255, 213, 79, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   font-size: 24px;
   position: relative;
   overflow: hidden;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
 }
 
 .icon-btn::before {
@@ -123,31 +139,34 @@ h1 {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(255, 213, 79, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 213, 79, 0.4) 0%, transparent 70%);
   transform: scale(0);
   pointer-events: none;
+  transition: transform 0.4s ease-out;
 }
 
 .icon-btn:hover {
-  transform: translateY(-3px) scale(1.08);
-  box-shadow: 0 8px 24px rgba(255, 213, 79, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 213, 79, 0.7);
+  transform: translateY(-6px) scale(1.12);
+  box-shadow: 0 12px 32px rgba(255, 213, 79, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 213, 79, 0.8);
   background: linear-gradient(135deg, #3a4857, #2f3945);
+  animation: bounce 0.6s ease-in-out;
+}
+
+.icon-btn:hover::before {
+  transform: scale(2);
 }
 
 .icon-btn:active {
-  transform: translateY(-1px) scale(0.95);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-
-.icon-btn:active::before {
-  animation: ripple 0.6s ease-out;
+  transform: translateY(-2px) scale(0.96);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
 .icon-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   fill: #ffd54f;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 /* CENTER CLICKER - ROBOT */
@@ -156,20 +175,30 @@ h1 {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 260px;
-  height: 260px;
+  width: 280px;
+  height: 280px;
   background: radial-gradient(circle at 30% 20%, #87ceeb 0%, #4fb3ff 30%, #0066cc 80%, #004499 100%);
   border-radius: 50%;
-  border: 8px solid rgba(0, 0, 0, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), inset -10px -10px 30px rgba(0, 0, 0, 0.3), inset 10px 10px 30px rgba(255, 255, 255, 0.2);
+  border: 10px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 
+    0 24px 64px rgba(0, 0, 0, 0.8),
+    inset -12px -12px 36px rgba(0, 0, 0, 0.4),
+    inset 12px 12px 36px rgba(255, 255, 255, 0.3),
+    0 0 40px rgba(100, 181, 246, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.1s ease-out;
-  animation: float 4s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite, robotPulse 2s ease-in-out infinite;
   position: relative;
   overflow: hidden;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes robotPulse {
+  0%, 100% { box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), inset -12px -12px 36px rgba(0, 0, 0, 0.4), inset 12px 12px 36px rgba(255, 255, 255, 0.3), 0 0 40px rgba(100, 181, 246, 0.3); }
+  50% { box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), inset -12px -12px 36px rgba(0, 0, 0, 0.4), inset 12px 12px 36px rgba(255, 255, 255, 0.3), 0 0 60px rgba(100, 181, 246, 0.6); }
 }
 
 #robot::before {
@@ -191,8 +220,9 @@ h1 {
 }
 
 #robot:hover {
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 30px 80px rgba(76, 175, 255, 0.5), inset -10px -10px 30px rgba(0, 0, 0, 0.3), inset 10px 10px 30px rgba(255, 255, 255, 0.35);
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow: 0 36px 96px rgba(76, 175, 255, 0.6), inset -12px -12px 36px rgba(0, 0, 0, 0.3), inset 12px 12px 36px rgba(255, 255, 255, 0.4);
+  animation: float 4s ease-in-out infinite, wiggle 0.3s ease-in-out infinite;
 }
 
 #robot:active {
@@ -220,61 +250,79 @@ h1 {
 
 .factory {
   flex: 1;
-  background: linear-gradient(135deg, rgba(30, 38, 53, 0.8), rgba(36, 45, 61, 0.8));
-  border-radius: 16px;
-  border: 2px solid rgba(255, 213, 79, 0.1);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(74, 90, 106, 0.6), rgba(90, 106, 122, 0.6));
+  border-radius: 18px;
+  border: 3px solid rgba(255, 213, 79, 0.15);
+  backdrop-filter: blur(12px);
   overflow: hidden;
   position: relative;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
 }
 
 .factory h2 {
   position: absolute;
   top: 16px;
   left: 16px;
-  font-size: 20px;
+  font-size: 28px;
   margin: 0;
-  color: rgba(255, 213, 79, 0.8);
-  letter-spacing: 1px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd54f, #ff9f1c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1.5px;
+  text-shadow: 
+    0 2px 0 rgba(0, 0, 0, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.4);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 /* PANELS */
 .panel {
-  background: linear-gradient(135deg, #1e2635 0%, #242d3d 100%);
-  border-radius: 14px;
-  border: 2px solid rgba(255, 213, 79, 0.15);
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  animation: slideIn 0.4s ease-out;
+  background: linear-gradient(135deg, #4a5a6a 0%, #5a6a7a 100%);
+  border-radius: 18px;
+  border: 2px solid rgba(255, 213, 79, 0.25);
+  padding: 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), inset 0 2px 6px rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  animation: slideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.3s ease;
 }
 
 .panel h3 {
-  font-size: 16px;
-  margin: 0 0 12px 0;
-  color: #ffd54f;
-  letter-spacing: 1px;
+  font-size: 18px;
+  margin: 0 0 14px 0;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd54f, #ff9f1c, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
   text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 }
 
 /* UPGRADE BUTTONS */
 .upgrade {
-  background: linear-gradient(135deg, #2a3847 0%, #1f2935 100%);
-  border: 2px solid rgba(255, 213, 79, 0.2);
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, #3a4a5a 0%, #2f3a4a 100%);
+  border: 2px solid rgba(255, 213, 79, 0.3);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  line-height: 1.4;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.5;
   position: relative;
   overflow: hidden;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .upgrade::before {
@@ -293,10 +341,11 @@ h1 {
 }
 
 .upgrade:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 213, 79, 0.6);
-  box-shadow: 0 12px 28px rgba(255, 213, 79, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-6px) scale(1.05);
+  border-color: rgba(255, 213, 79, 0.7);
+  box-shadow: 0 14px 32px rgba(255, 213, 79, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.2);
   background: linear-gradient(135deg, #3a4857 0%, #2f3945 100%);
+  animation: bounce 0.5s ease-in-out;
 }
 
 .upgrade:active {
@@ -306,7 +355,11 @@ h1 {
 
 .upgrade span {
   color: #64b5f6;
-  font-weight: 700;
+  font-weight: 900;
+  background: linear-gradient(135deg, #64b5f6, #42a5f5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* RIGHT SIDEBAR */
@@ -337,55 +390,62 @@ h1 {
   background: rgba(255, 213, 79, 0.4);
 }
 
-/* MODALS */
+/* MODAL */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   display: none;
   align-items: center;
   justify-content: center;
   z-index: 200;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
   animation: fadeInScale 0.3s ease-out;
 }
 
 .modal-box {
-  background: linear-gradient(135deg, #1e2635 0%, #242d3d 100%);
-  border: 2px solid rgba(255, 213, 79, 0.3);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-  max-width: 400px;
+  background: linear-gradient(135deg, #4a5a6a 0%, #5a6a7a 100%);
+  border: 3px solid rgba(255, 213, 79, 0.4);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  max-width: 480px;
   text-align: center;
   animation: slideIn 0.3s ease-out;
 }
 
 .modal-box h3 {
-  font-size: 24px;
-  margin: 0 0 16px 0;
-  color: #ffd54f;
-  letter-spacing: 1px;
+  font-size: 28px;
+  margin: 0 0 18px 0;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffd54f, #ff9f1c, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 #achList, #dailyText, #offlineText {
-  font-size: 14px;
-  line-height: 1.8;
-  color: #ddd;
-  margin: 12px 0;
+  font-size: 16px;
+  line-height: 2;
+  color: #e8e8e8;
+  margin: 14px 0;
+  font-weight: 600;
 }
 
 .modal-box button {
   background: linear-gradient(135deg, #ffd54f, #ff9f1c);
   border: none;
-  color: #000;
-  padding: 12px 28px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 700;
+  color: #1a1a1a;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 900;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(255, 213, 79, 0.3);
-  transition: all 0.2s;
+  box-shadow: 0 8px 20px rgba(255, 213, 79, 0.4);
+  transition: all 0.3s;
   letter-spacing: 1px;
 }
 
@@ -453,18 +513,18 @@ h1 {
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%) translateY(20px);
-  background: linear-gradient(135deg, #1e2635, #242d3d);
+  background: linear-gradient(135deg, #4a5a6a, #5a6a7a);
   color: #ffd54f;
-  padding: 16px 28px;
-  border-radius: 12px;
-  border: 2px solid rgba(255, 213, 79, 0.5);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 213, 79, 0.2);
+  padding: 18px 32px;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 213, 79, 0.7);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 0 28px rgba(255, 213, 79, 0.35);
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: 999;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 16px;
 }
 
 .toast.show {
@@ -483,14 +543,14 @@ h1 {
   font-weight: 900;
   color: #ffd54f;
   text-shadow: 
-    0 0 20px rgba(255, 213, 79, 0.8),
-    0 0 40px rgba(255, 159, 28, 0.6),
-    0 0 60px rgba(255, 159, 28, 0.4);
+    0 4px 0 rgba(0, 0, 0, 0.7),
+    0 8px 16px rgba(255, 213, 79, 0.6),
+    0 0 40px rgba(255, 159, 28, 0.8);
   z-index: 998;
   pointer-events: none;
-  animation: pop 1s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  animation: pop 1.2s cubic-bezier(0.34,1.56,0.64,1) forwards;
   letter-spacing: 3px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.7));
 }
 
 /* SCROLLBAR STYLING */
@@ -510,6 +570,36 @@ h1 {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 213, 79, 0.5);
 }
+
+/* RARITY COLORS */
+.upgrade.common {
+  border-color: rgba(255, 213, 79, 0.3);
+}
+
+.upgrade.common:hover {
+  border-color: rgba(255, 213, 79, 0.7);
+  background: linear-gradient(135deg, #4a5a6f, #3f4f5f);
+}
+
+.upgrade.rare {
+  border-color: rgba(100, 181, 246, 0.4);
+}
+
+.upgrade.rare:hover {
+  border-color: rgba(100, 181, 246, 0.8);
+  background: linear-gradient(135deg, #1f3a5f, #1a2f4f);
+  box-shadow: 0 14px 32px rgba(100, 181, 246, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.upgrade.epic {
+  border-color: rgba(255, 107, 107, 0.4);
+}
+
+.upgrade.epic:hover {
+  border-color: rgba(255, 107, 107, 0.8);
+  background: linear-gradient(135deg, #5f1f1f, #4f1a1a);
+  box-shadow: 0 14px 32px rgba(255, 107, 107, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
 </style>
 </head>
 <body>
@@ -517,26 +607,33 @@ h1 {
 <h1>Robo Clicker</h1>
 <div class="top-right">
 <div class="icon-btn" onclick="openDaily()" title="Daily Reward">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <g transform="translate(12, 12)">
+      <circle cx="0" cy="0" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M0,-6 L0,0 L4,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="0" cy="0" r="2" fill="currentColor"/>
+    </g>
   </svg>
 </div>
 <div class="icon-btn" onclick="openAchievements()" title="Achievements">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <polygon points="12 2 15.09 10.26 24 10.5 18 16.6 20.29 25.5 12 20.92 3.71 25.5 6 16.6 0 10.5 8.91 10.26"/><circle cx="12" cy="12" r="1"/>
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2 L15 8 L22 8 L17 13 L19 20 L12 16 L5 20 L7 13 L2 8 L9 8 Z"/>
   </svg>
 </div>
 <div class="icon-btn" onclick="openLeaderboard()" title="Leaderboard">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <polyline points="12 3 20 7 20 17 12 21 4 17 4 7 12 3"/><polyline points="12 12 20 7"/><polyline points="12 21 12 12"/><polyline points="4 7 12 12"/>
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <rect x="2" y="10" width="4" height="10" rx="1"/>
+    <rect x="10" y="4" width="4" height="16" rx="1"/>
+    <rect x="18" y="7" width="4" height="13" rx="1"/>
   </svg>
 </div>
 <div class="icon-btn" onclick="openSettings()" title="Settings">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m5.08-5.08l4.24-4.24"/>
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="2.5"/>
+    <path d="M12,1 L13,6 C14.5,6.2 16,6.8 17.2,7.8 L21.5,5.5 L22.5,9.5 L19.2,11.5 C19.5,12.3 19.7,13.1 19.8,14 L24,15 L23,19 L19.8,18 C19.2,19.3 18.3,20.4 17.2,21.2 L18.5,25.5 L14.5,25.5 L13,21.5 C12.3,21.6 11.7,21.6 11,21.5 L9.5,25.5 L5.5,25.5 L6.8,21.2 C5.7,20.4 4.8,19.3 4.2,18 L1,19 L0,15 L4.2,14 C4.3,13.1 4.5,12.3 4.8,11.5 L1.5,9.5 L2.5,5.5 L6.8,7.8 C8,6.8 9.5,6.2 11,6 Z"/>
   </svg>
 </div>
-<div class="currency">Bots: <span id="bots">0</span></div>
+<div class="currency">🤖 <span id="bots">0</span></div>
 </div>
 </header>
 
@@ -547,37 +644,44 @@ h1 {
 </div>
 
 <div>
-<div class="panel">
-<h3>Upgrades</h3>
-<div class="upgrade common" onclick="buyClick()">Stronger Click<br>Cost: <span id="clickCost">10</span></div>
-<div class="upgrade rare" onclick="buyAuto()">Auto Builder<br>Cost: <span id="autoCost">50</span></div>
-<div class="upgrade epic" onclick="buyMega()">Mega Click<br>Cost: <span id="megaCost">250</span></div>
+<div class="panel" style="padding: 0; overflow: hidden; flex: 1; display: flex; flex-direction: column;">
+<h3 style="padding: 20px 20px 12px 20px; margin: 0;">⚡ Upgrades</h3>
+<div style="overflow-y: auto; padding: 0 12px 12px 12px; flex: 1;">
+<div class="upgrade common" onclick="buyClick()">💪 Stronger Click<br><span style="font-size:13px;">Cost: <span id="clickCost">10</span></span></div>
+<div class="upgrade rare" onclick="buyAuto()">🤖 Auto Builder<br><span style="font-size:13px;">Cost: <span id="autoCost">50</span></span></div>
+<div class="upgrade epic" onclick="buyMega()">💥 Mega Click<br><span style="font-size:13px;">Cost: <span id="megaCost">250</span></span></div>
+<div class="upgrade common" onclick="buyBot()">🦾 Bot Assistant<br><span style="font-size:13px;">Cost: <span id="botCost">100</span></span></div>
+<div class="upgrade rare" onclick="buyMultiplier()">2️⃣ Click Multiplier<br><span style="font-size:13px;">Cost: <span id="multiplierCost">500</span></span></div>
+<div class="upgrade epic" onclick="buySuper()">⭐ Super Bot<br><span style="font-size:13px;">Cost: <span id="superCost">1000</span></span></div>
+<div class="upgrade common" onclick="buyFactory()">🏭 Factory Upgrade<br><span style="font-size:13px;">Cost: <span id="factoryCost">200</span></span></div>
+<div class="upgrade rare" onclick="buyMomentum()">💫 Momentum Boost<br><span style="font-size:13px;">Cost: <span id="momentumCost">750</span></span></div>
+<div class="upgrade epic" onclick="buyLegendary()">👑 Legendary Power<br><span style="font-size:13px;">Cost: <span id="legendaryCost">2500</span></span></div>
+</div>
 </div>
 
-<div class="panel">
-<h3>Progress</h3>
-<div>Milestone: <span id="milestone">1</span></div>
-<div>Achievements: <span id="achCount">0</span></div>
-</div>
-
-<div class="panel upgrade" onclick="doRebirth()">Rebirth<br><small>Requires 1,000 Bots</small></div>
+<div class="panel upgrade" onclick="doRebirth()" style="text-align: center; font-size: 18px; cursor:pointer; animation: heartbeat 1.5s ease-in-out infinite; margin-top: 12px;"><span style="font-size:32px;display:block;margin-bottom:8px;">⚡</span>Rebirth<br><span style="font-size:12px;color:#ddd;">Requires 1,000 Bots</span></div>
 </div>
 </div>
 
 <!-- DAILY -->
-<div class="modal" id="dailyModal"><div class="modal-box"><h3>Daily Reward</h3><div id="dailyText"></div><br><button onclick="claimDaily()">Claim</button></div></div>
+<div class="modal" id="dailyModal"><div class="modal-box" style="max-width: 520px; padding: 50px;"><h3 style="font-size: 36px;">🎁 Daily Reward</h3><div id="dailyText" style="font-size: 18px; margin: 30px 0; min-height: 100px; display: flex; flex-direction: column; justify-content: center;">💰 Reward: +500 Bots</div><div style="margin: 20px 0; padding: 20px; background: rgba(255,213,79,0.1); border-radius: 12px; border-left: 4px solid #ffd54f;"><div style="font-size: 14px; color: #ccc;">Next daily reward in:</div><div id="dailyTimer" style="font-size: 20px; font-weight: 900; color: #ffd54f; margin-top: 8px;">23:59:59</div></div><button onclick="claimDaily()" style="font-size: 18px; padding: 16px 48px; margin-top: 20px;">✨ Claim Reward</button></div></div>
+
 <!-- ACHIEVEMENTS -->
-<div class="modal" id="achModal"><div class="modal-box"><h3>Achievements</h3><div id="achList"></div><br><button onclick="closeModals()">Close</button></div></div>
+<div class="modal" id="achModal"><div class="modal-box" style="max-width: 520px; padding: 50px;"><h3 style="font-size: 36px;">🏆 Achievements</h3><div id="achList" style="font-size: 16px; margin: 20px 0; max-height: 400px; overflow-y: auto;"></div><button onclick="closeModals()" style="font-size: 16px; padding: 14px 40px; margin-top: 20px;">Close</button></div></div>
+
 <!-- SETTINGS -->
-<div class="modal" id="setModal"><div class="modal-box"><h3>Settings</h3><label><input type="checkbox" id="soundToggle" checked> Sound</label><br><br><button onclick="closeModals()">Close</button></div></div>
+<div class="modal" id="setModal"><div class="modal-box" style="max-width: 540px; padding: 50px;"><h3 style="font-size: 36px;">⚙️ Settings</h3><div style="margin: 40px 0; text-align: left;"><div style="margin-bottom: 40px;"><div style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #ffd54f;">🔊 Sound & Music</div><div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding: 12px; background: rgba(255,213,79,0.1); border-radius: 10px;"><label style="font-size: 16px; margin: 0; cursor: pointer;">🔊 Sound Effects</label><input type="checkbox" id="soundToggle" checked style="width: 24px; height: 24px; cursor: pointer; accent-color: #ffd54f;"></div><div style="margin: 20px 0;"><label style="font-size: 14px; color: #ccc; display: block; margin-bottom: 8px;">Sound Volume: <span id="soundVolumeDisplay">100</span>%</label><input type="range" id="soundVolume" min="0" max="100" value="100" style="width: 100%; height: 8px; cursor: pointer; accent-color: #ffd54f;"></div></div><div style="margin-bottom: 30px;"><div style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #ff9f1c;">🎵 Music</div><div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding: 12px; background: rgba(255,159,28,0.1); border-radius: 10px;"><label style="font-size: 16px; margin: 0; cursor: pointer;">🎵 Background Music</label><input type="checkbox" id="musicToggle" checked style="width: 24px; height: 24px; cursor: pointer; accent-color: #ff9f1c;"></div><div style="margin: 20px 0;"><label style="font-size: 14px; color: #ccc; display: block; margin-bottom: 8px;">Music Volume: <span id="musicVolumeDisplay">100</span>%</label><input type="range" id="musicVolume" min="0" max="100" value="100" style="width: 100%; height: 8px; cursor: pointer; accent-color: #ff9f1c;"></div></div></div><button onclick="closeModals()" style="font-size: 16px; padding: 14px 40px; width: 100%; margin-top: 20px;">Close Settings</button></div></div>
+
 <!-- OFFLINE -->
-<div class="modal" id="offlineModal"><div class="modal-box"><h3>Welcome Back</h3><div id="offlineText"></div><br><button onclick="closeModals()">Nice!</button></div></div>
+<div class="modal" id="offlineModal"><div class="modal-box" style="max-width: 520px; padding: 50px;"><h3 style="font-size: 36px;">👋 Welcome Back!</h3><div id="offlineText" style="font-size: 18px; margin: 30px 0; min-height: 80px; display: flex; align-items: center; justify-content: center;"></div><button onclick="closeModals()" style="font-size: 16px; padding: 14px 40px; margin-top: 20px;">Nice! 🎉</button></div></div>
 
 <script>
 const cg=window.CrazyGamesSDK; if(cg) cg.init();
 let bots=0,perClick=1,autoBots=0,megaClick=0,clickCost=10,autoCost=50,megaCost=250,rebirths=0;
+let botLevel=0,botCost=100,multiplier=1,multiplierCost=500,superLevel=0,superCost=1000;
+let factoryLevel=0,factoryCost=200,momentumLevel=0,momentumCost=750,legendaryLevel=0,legendaryCost=2500;
 let milestone=1,achievements={click100:false,bots1k:false};
-let sound=true;
+let sound=true,music=true,soundVolume=1,musicVolume=1;
 
 const clickSound=new Audio('https://assets.mixkit.co/sfx/preview/mixkit-soft-click-1124.mp3');clickSound.volume=.4;
 const el=i=>document.getElementById(i);
@@ -587,6 +691,12 @@ function updateUI(){
  el('clickCost').textContent=clickCost;
  el('autoCost').textContent=autoCost;
  el('megaCost').textContent=megaCost;
+ el('botCost').textContent=botCost;
+ el('multiplierCost').textContent=multiplierCost;
+ el('superCost').textContent=superCost;
+ el('factoryCost').textContent=factoryCost;
+ el('momentumCost').textContent=momentumCost;
+ el('legendaryCost').textContent=legendaryCost;
  el('milestone').textContent=milestone;
  el('achCount').textContent=Object.values(achievements).filter(v=>v).length;
  save();
@@ -606,22 +716,32 @@ robot.onclick=e=>{
 function buyClick(){if(bots>=clickCost){bots-=clickCost;perClick++;clickCost=Math.ceil(clickCost*1.6);screenShake(3,60);createConfetti();showUpgradeToast('Stronger Click ⬆️');updateUI()}}
 function buyAuto(){if(bots>=autoCost){bots-=autoCost;autoBots++;autoCost=Math.ceil(autoCost*2);screenShake(3,60);createConfetti();showUpgradeToast('Auto Builder 🤖');updateUI()}}
 function buyMega(){if(bots>=megaCost){bots-=megaCost;megaClick+=5;megaCost=Math.ceil(megaCost*2.5);screenShake(3,60);createConfetti();showUpgradeToast('Mega Click 💥');updateUI()}}
+function buyBot(){if(bots>=botCost){bots-=botCost;botLevel++;autoBots+=2;botCost=Math.ceil(botCost*2.2);screenShake(3,60);createConfetti();showUpgradeToast('Bot Assistant 🦾');updateUI()}}
+function buyMultiplier(){if(bots>=multiplierCost){bots-=multiplierCost;multiplier+=0.5;perClick*=1.2;multiplierCost=Math.ceil(multiplierCost*2.8);screenShake(3,60);createConfetti();showUpgradeToast('Click Multiplier 2️⃣');updateUI()}}
+function buySuper(){if(bots>=superCost){bots-=superCost;superLevel++;megaClick+=8;autoBots+=3;superCost=Math.ceil(superCost*3);screenShake(3,60);createConfetti();showUpgradeToast('Super Bot ⭐');updateUI()}}
+function buyFactory(){if(bots>=factoryCost){bots-=factoryCost;factoryLevel++;autoBots+=1;perClick+=0.5;factoryCost=Math.ceil(factoryCost*2.4);screenShake(3,60);createConfetti();showUpgradeToast('Factory Upgrade 🏭');updateUI()}}
+function buyMomentum(){if(bots>=momentumCost){bots-=momentumCost;momentumLevel++;megaClick+=10;multiplier+=0.8;momentumCost=Math.ceil(momentumCost*2.6);screenShake(3,60);createConfetti();showUpgradeToast('Momentum Boost 💫');updateUI()}}
+function buyLegendary(){if(bots>=legendaryCost){bots-=legendaryCost;legendaryLevel++;perClick*=1.5;autoBots*=1.3;megaClick*=1.4;legendaryCost=Math.ceil(legendaryCost*3.5);screenShake(6,120);createExplosion();showUpgradeToast('Legendary Power 👑');updateUI()}}
 
 function showUpgradeToast(text){
   const toast=document.createElement('div');
   toast.className='toast';
-  toast.innerHTML=text;
+  toast.innerHTML=`<span style="font-size:16px;">${text}</span>`;
   document.body.appendChild(toast);
   setTimeout(()=>toast.classList.add('show'),10);
   setTimeout(()=>{toast.classList.remove('show');setTimeout(()=>toast.remove(),300)},2000);
 }
 
 function createConfetti(){
-  for(let i=0;i<20;i++){
+  for(let i=0;i<28;i++){
     const confetti=document.createElement('div');
-    confetti.style.cssText=`position:fixed;width:8px;height:8px;background:${['#ffd54f','#ff9f1c','#64b5f6'][Math.floor(Math.random()*3)]};left:${Math.random()*window.innerWidth}px;top:0;border-radius:50%;pointer-events:none;z-index:997;`;
-    const duration=800+Math.random()*600;
-    confetti.animate([{transform:'translateY(0) rotate(0deg)',opacity:1},{transform:`translateY(${window.innerHeight}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration,easing:'cubic-bezier(0.25,0.46,0.45,0.94)'});
+    const color=['#ffd54f','#ff9f1c','#ff6b6b','#64b5f6'][Math.floor(Math.random()*4)];
+    confetti.style.cssText=`position:fixed;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${color};left:${Math.random()*window.innerWidth}px;top:0;border-radius:50%;pointer-events:none;z-index:997;box-shadow:0 0 ${4+Math.random()*6}px ${color};`;
+    const duration=900+Math.random()*700;
+    const angle=Math.random()*Math.PI*2;
+    const dist=window.innerHeight+100;
+    const dx=Math.cos(angle)*300;
+    confetti.animate([{transform:'translateY(0) rotate(0deg) scale(1)',opacity:1},{transform:`translateY(${dist}px) rotate(${Math.random()*720}deg) scale(0)`,opacity:0}],{duration,easing:'cubic-bezier(0.25,0.46,0.45,0.94)'});
     document.body.appendChild(confetti);
     setTimeout(()=>confetti.remove(),duration);
   }
@@ -632,47 +752,63 @@ setInterval(()=>{bots+=autoBots;checkMilestones();updateUI()},1000);
 function doRebirth(){if(bots>=1000){rebirths++;bots=0;perClick=1;autoBots=0;megaClick=0;screenShake(18,450);createExplosion();showMilestonePopup('⚡ REBIRTH! ⚡');updateUI()}}
 
 function createExplosion(){
-  for(let i=0;i<40;i++){
+  for(let i=0;i<52;i++){
     const particle=document.createElement('div');
     const angle=Math.random()*Math.PI*2;
-    const velocity=8+Math.random()*12;
-    const dist=velocity*80;
+    const velocity=10+Math.random()*16;
+    const dist=velocity*100;
     const tx=Math.cos(angle)*dist;
     const ty=Math.sin(angle)*dist;
-    particle.style.cssText=`position:fixed;width:${6+Math.random()*6}px;height:${6+Math.random()*6}px;background:${['#ffd54f','#ff9f1c','#64b5f6','#4caf50'][Math.floor(Math.random()*4)]};left:50%;top:50%;border-radius:50%;pointer-events:none;z-index:997;box-shadow:0 0 ${4+Math.random()*6}px currentColor;margin-left:-${3+Math.random()*3}px;margin-top:-${3+Math.random()*3}px;`;
-    particle.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${tx}px,${ty}px) scale(0)`,opacity:0}],{duration:900,easing:'cubic-bezier(0.2,0.8,0.2,1)'});
+    const color=['#ffd54f','#ff9f1c','#64b5f6','#4caf50','#ff6b6b'][Math.floor(Math.random()*5)];
+    particle.style.cssText=`position:fixed;width:${8+Math.random()*8}px;height:${8+Math.random()*8}px;background:${color};left:50%;top:50%;border-radius:50%;pointer-events:none;z-index:997;box-shadow:0 0 ${8+Math.random()*12}px ${color};margin-left:-${4+Math.random()*4}px;margin-top:-${4+Math.random()*4}px;`;
+    particle.animate([{transform:'translate(0,0) scale(1)',opacity:1,filter:'blur(0px)'},{transform:`translate(${tx}px,${ty}px) scale(0)`,opacity:0,filter:'blur(8px)'}],{duration:1100,easing:'cubic-bezier(0.2,0.8,0.2,1)'});
     document.body.appendChild(particle);
-    setTimeout(()=>particle.remove(),900);
+    setTimeout(()=>particle.remove(),1100);
   }
 }
 
-function burst(x,y){for(let i=0;i<16;i++){const c=document.createElement('div');c.className='coin';c.style.left=x+'px';c.style.top=y+'px';const angle=Math.random()*Math.PI*2;const velocity=4+Math.random()*6;const dx=Math.cos(angle)*velocity;const dy=Math.sin(angle)*velocity;c.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx*80}px,${dy*80}px) scale(0)`,opacity:0}],{duration:900,easing:'cubic-bezier(.2,.8,.2,1)'});document.body.appendChild(c);setTimeout(()=>c.remove(),900)}}
+function burst(x,y){
+  for(let i=0;i<20;i++){
+    const c=document.createElement('div');
+    c.className='coin';
+    c.style.left=x+'px';
+    c.style.top=y+'px';
+    const angle=Math.random()*Math.PI*2;
+    const velocity=5+Math.random()*8;
+    const dx=Math.cos(angle)*velocity;
+    const dy=Math.sin(angle)*velocity;
+    c.style.boxShadow=`0 0 12px rgba(255,213,79,1),inset -2px -2px 4px rgba(0,0,0,0.5)`;
+    c.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx*100}px,${dy*100}px) scale(0)`,opacity:0}],{duration:1000,easing:'cubic-bezier(.2,.8,.2,1)'});
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1000);
+  }
+}
 
 function checkMilestones(){if(bots>1000&&milestone===1){milestone=2;el('robot').classList.add('big');showMilestonePopup('MILESTONE REACHED!')}}
 function checkAchievements(){if(bots>=1000)achievements.bots1k=true}
 
 // DAILY
-function openDaily(){el('dailyModal').style.display='flex';el('dailyText').textContent='💰 Reward: +500 Bots'}
+function openDaily(){el('dailyModal').style.display='flex';el('dailyText').innerHTML='<div style="font-size:24px;margin:10px 0;font-weight:900;">💰 Reward: <span style="background:linear-gradient(135deg,#ffd54f,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">+500 Bots</span></div>'}
 function claimDaily(){bots+=500;showDailyToast();closeModals();updateUI()}
 
 function showDailyToast(){
   const toast=document.createElement('div');
   toast.className='toast';
-  toast.innerHTML='✨ Daily Reward Claimed! +500 Bots';
+  toast.innerHTML='✨ Daily Reward Claimed! <span style="background:linear-gradient(135deg,#4caf50,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;">+500 Bots</span>';
   document.body.appendChild(toast);
   setTimeout(()=>toast.classList.add('show'),10);
   setTimeout(()=>{toast.classList.remove('show');setTimeout(()=>toast.remove(),300)},2700);
 }
 
 // MODALS
-function openAchievements(){el('achModal').style.display='flex';el('achList').innerHTML=Object.entries(achievements).map(([k,v])=>`${k}: ${v?'Done':'?'}`).join('<br>')}
-function openSettings(){el('setModal').style.display='flex'}
-function openLeaderboard(){if(cg)cg.showLeaderboard({leaderboardID:'main'})}
+function openAchievements(){el('achModal').style.display='flex';el('achList').innerHTML=Object.entries(achievements).map(([k,v])=>`<div style="margin:8px 0;padding:12px;background:rgba(255,213,79,0.1);border-radius:8px;border-left:4px solid ${v?'#4caf50':'#999'};">${k}: ${v?'🏆 Done':'❓ Locked'}</div>`).join('')}
+function openSettings(){el('setModal').style.display='flex';el('soundToggle').checked=sound;el('musicToggle').checked=music;el('soundVolume').value=Math.round(soundVolume*100);el('musicVolume').value=Math.round(musicVolume*100);document.getElementById('soundVolumeDisplay').textContent=Math.round(soundVolume*100);document.getElementById('musicVolumeDisplay').textContent=Math.round(musicVolume*100);}
+function openLeaderboard(){if(cg)cg.showLeaderboard({leaderboardID:'main'});else alert('📊 Leaderboards coming soon!')}
 function closeModals(){document.querySelectorAll('.modal').forEach(m=>m.style.display='none')}
 
 // SAVE + OFFLINE
-function save(){localStorage.setItem('save',JSON.stringify({bots,perClick,autoBots,megaClick,clickCost,autoCost,megaCost,milestone,achievements,time:Date.now()}))}
-function load(){const d=JSON.parse(localStorage.getItem('save'));if(!d)return;Object.assign({bots,perClick,autoBots,megaClick,clickCost,autoCost,megaCost,milestone,achievements},d);const diff=Math.floor((Date.now()-d.time)/1000);const earned=diff*autoBots;if(earned>0){bots+=earned;el('offlineText').textContent=`You earned ${earned} Bots while away!`;el('offlineModal').style.display='flex'}}
+function save(){localStorage.setItem('save',JSON.stringify({bots,perClick,autoBots,megaClick,clickCost,autoCost,megaCost,botLevel,botCost,multiplier,multiplierCost,superLevel,superCost,factoryLevel,factoryCost,momentumLevel,momentumCost,legendaryLevel,legendaryCost,milestone,achievements,time:Date.now(),sound,music,soundVolume,musicVolume}))}
+function load(){const d=JSON.parse(localStorage.getItem('save'));if(!d)return;Object.assign({bots,perClick,autoBots,megaClick,clickCost,autoCost,megaCost,botLevel,botCost,multiplier,multiplierCost,superLevel,superCost,factoryLevel,factoryCost,momentumLevel,momentumCost,legendaryLevel,legendaryCost,milestone,achievements,sound,music,soundVolume,musicVolume},d);const diff=Math.floor((Date.now()-d.time)/1000);const earned=diff*autoBots;if(earned>0){bots+=earned;el('offlineText').textContent=`You earned <span style="background:linear-gradient(135deg,#4caf50,#81c784);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:900;">${earned} Bots</span> while away!`;el('offlineModal').style.display='flex'}}
 load();updateUI();
 
 // REWARDED AD
@@ -684,8 +820,10 @@ function showMilestonePopup(text){
   popup.className='milestone';
   popup.textContent=text;
   popup.style.animation='pop 1s cubic-bezier(0.34,1.56,0.64,1)';
+  popup.style.fontSize='64px';
+  popup.style.textShadow='0 4px 0 rgba(0,0,0,0.7),0 8px 16px rgba(255,213,79,0.6),0 0 40px rgba(255,159,28,0.8)';
   document.body.appendChild(popup);
-  setTimeout(()=>{popup.style.animation='fadeOut 0.5s ease-in';setTimeout(()=>popup.remove(),500)},1600);
+  setTimeout(()=>{popup.style.animation='fadeOut 0.6s ease-in';setTimeout(()=>popup.remove(),600)},1600);
 }
 
 function screenShake(intensity=8,duration=200){
@@ -707,149 +845,41 @@ function addButtonPulse(el){
 
 function createClickRing(x,y){
   const ring=document.createElement('div');
-  ring.style.cssText=`position:fixed;width:40px;height:40px;border:3px solid #ffd54f;border-radius:50%;left:${x-20}px;top:${y-20}px;pointer-events:none;z-index:998;box-shadow:0 0 12px rgba(255,213,79,0.6);`;
-  ring.animate([{transform:'scale(1)',opacity:1},{transform:'scale(2.5)',opacity:0}],{duration:600,easing:'cubic-bezier(0.2,0.8,0.2,1)'});
+  ring.style.cssText=`position:fixed;width:50px;height:50px;border:4px solid #ffd54f;border-radius:50%;left:${x-25}px;top:${y-25}px;pointer-events:none;z-index:998;box-shadow:0 0 16px rgba(255,213,79,0.8),inset 0 0 12px rgba(255,213,79,0.4);`;
+  ring.animate([{transform:'scale(1)',opacity:1},{transform:'scale(3)',opacity:0}],{duration:700,easing:'cubic-bezier(0.2,0.8,0.2,1)'});
   document.body.appendChild(ring);
-  setTimeout(()=>ring.remove(),600);
+  setTimeout(()=>ring.remove(),700);
 }
 
 function createSparks(x,y){
-  const sparkCount=Math.random()>0.5?8:12;
+  const sparkCount=Math.random()>0.5?12:16;
   for(let i=0;i<sparkCount;i++){
     const spark=document.createElement('div');
     spark.className='particle spark';
     const angle=Math.random()*Math.PI*2;
-    const dist=40+Math.random()*60;
+    const dist=50+Math.random()*80;
     const tx=Math.cos(angle)*dist;
     const ty=Math.sin(angle)*dist;
-    spark.style.cssText=`left:${x}px;top:${y}px;--tx:${tx}px;--ty:${ty}px;`;
-    spark.animate([{opacity:1,transform:'scale(1) translate(0,0)'},{opacity:0,transform:`scale(0.3) translate(${tx}px,${ty}px)`}],{duration:600,easing:'cubic-bezier(0.2,0.8,0.2,1)'});
+    spark.style.cssText=`left:${x}px;top:${y}px;--tx:${tx}px;--ty:${ty}px;width:6px;height:6px;background:#ffd54f;border-radius:50%;box-shadow:0 0 8px #ff9f1c;`;
+    spark.animate([{opacity:1,transform:'scale(1) translate(0,0)'},{opacity:0,transform:`scale(0) translate(${tx}px,${ty}px)`}],{duration:700,easing:'cubic-bezier(0.2,0.8,0.2,1)'});
     document.body.appendChild(spark);
-    setTimeout(()=>spark.remove(),600);
+    setTimeout(()=>spark.remove(),700);
   }
 }
+
+// VOLUME CONTROLS
+document.addEventListener('DOMContentLoaded',()=>{
+  const soundToggle=document.getElementById('soundToggle');
+  const musicToggle=document.getElementById('musicToggle');
+  const soundVolSlider=document.getElementById('soundVolume');
+  const musicVolSlider=document.getElementById('musicVolume');
+  
+  soundToggle.addEventListener('change',()=>{sound=soundToggle.checked;save()});
+  musicToggle.addEventListener('change',()=>{music=musicToggle.checked;save()});
+  soundVolSlider.addEventListener('input',()=>{soundVolume=soundVolSlider.value/100;clickSound.volume=soundVolume*0.4;document.getElementById('soundVolumeDisplay').textContent=soundVolSlider.value;save()});
+  musicVolSlider.addEventListener('input',()=>{musicVolume=musicVolSlider.value/100;document.getElementById('musicVolumeDisplay').textContent=musicVolSlider.value;save()});
+});
 </script>
 </body>
 </html>
-
-/* =========================
-   JUICE SYSTEMS (FINAL POLISH)
-   ========================= */
-
-// Screen shake
-let shakeTime = 0;
-function screenShake(intensity = 6, duration = 150) {
-  shakeTime = duration;
-  const start = Date.now();
-  const interval = setInterval(() => {
-    const elapsed = Date.now() - start;
-    if (elapsed > duration) {
-      document.body.style.transform = "";
-      clearInterval(interval);
-      return;
-    }
-    const x = (Math.random() - 0.5) * intensity;
-    const y = (Math.random() - 0.5) * intensity;
-    document.body.style.transform = `translate(${x}px, ${y}px)`;
-  }, 16);
-}
-
-// Click flash + pop
-function clickJuice(el) {
-  el.classList.add('click-pop');
-  setTimeout(() => el.classList.remove('click-pop'), 120);
-}
-
-// Coin burst
-function spawnCoins(x, y, amount = 6) {
-  for (let i = 0; i < amount; i++) {
-    const coin = document.createElement('div');
-    coin.className = 'coin';
-    coin.style.left = x + 'px';
-    coin.style.top = y + 'px';
-    document.body.appendChild(coin);
-
-    const target = document.getElementById('money');
-    const rect = target.getBoundingClientRect();
-
-    const tx = rect.left + rect.width / 2;
-    const ty = rect.top + rect.height / 2;
-
-    coin.animate([
-      { transform: 'translate(0,0) scale(1)', opacity: 1 },
-      { transform: `translate(${tx - x}px, ${ty - y}px) scale(0.3)`, opacity: 0 }
-    ], { duration: 600, easing: 'cubic-bezier(.2,.8,.2,1)' });
-
-    setTimeout(() => coin.remove(), 600);
-  }
-}
-
-// Achievement toast
-function showToast(text) {
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.innerText = text;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.classList.add('show'), 50);
-  setTimeout(() => toast.remove(), 3000);
-}
-
-// Milestone celebration
-function milestoneCelebrate(text) {
-  screenShake(10, 300);
-  const overlay = document.createElement('div');
-  overlay.className = 'milestone';
-  overlay.innerText = text;
-  document.body.appendChild(overlay);
-  setTimeout(() => overlay.remove(), 2000);
-}
-
-/* =========================
-   CLICK HANDLER
-   ========================= */
-
-robot.addEventListener('click', (e) => {
-  if (paused) return;
-  bots += clickPower;
-  clickJuice(robot);
-  spawnCoins(e.clientX, e.clientY);
-  screenShake(2, 80);
-  updateUI();
-});
-
-/* =========================
-   REBIRTH JUICE
-   ========================= */
-function rebirth() {
-  screenShake(14, 400);
-  milestoneCelebrate('REBIRTH!');
-  bots = 0;
-  rebirths++;
-  updateUI();
-}
-
-/* =========================
-   DAILY REWARD POP
-   ========================= */
-function dailyReward() {
-  bots += 500;
-  showToast('Daily Reward Claimed! +500 Bots');
-  updateUI();
-}
-
-/* =========================
-   CSS JUICE (APPEND TO STYLE)
-   ========================= */
-
-const style = document.createElement('style');
-style.innerHTML = `
-.click-pop { animation: pop 0.12s ease-out; }
-@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-.coin { position: fixed; width: 12px; height: 12px; background: gold; border-radius: 50%; pointer-events: none; z-index: 9999; }
-.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) scale(0.8); background: #222; color: #fff; padding: 12px 20px; border-radius: 12px; opacity: 0; transition: all .3s; z-index: 9999; }
-.toast.show { opacity: 1; transform: translateX(-50%) scale(1); }
-.milestone { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 900; background: rgba(0,0,0,0.6); color: #fff; z-index: 9998; animation: fade 2s; }
-@keyframes fade { from { opacity: 1; } to { opacity: 0; } }
-`;
-document.head.appendChild(style);
 
