@@ -56,14 +56,9 @@ class RoboClicker {
             upgrades: {
                 'cursor': { level: 0, baseCost: 10, basePower: 1, name: "Stronger Clicks", desc: "+1 Click Value", type: "click" },
                 'auto_clicker': { level: 0, baseCost: 100, basePower: 1, name: "Auto Clicker", desc: "Clicks once every second", type: "effect_autoclick" },
-                'crit_strike': { level: 0, baseCost: 1000, basePower: 1, name: "Critical Strike", desc: "+1% Chance for Double Damage", type: "effect_crit" },
-                'click_efficiency': { level: 0, baseCost: 500, basePower: 0.5, name: "Click Efficiency", desc: "+0.5 Click Power", type: "click" },
-                'xp_accelerator': { level: 0, baseCost: 2000, basePower: 0.2, name: "XP Accelerator", desc: "+20% XP Gain", type: "effect_xp" },
-                'crit_overload': { level: 0, baseCost: 5000, basePower: 0.25, name: "Critical Overload", desc: "+25% Crit Multiplier", type: "effect_crit_mult" },
-                'rapid_fire': { level: 0, baseCost: 3000, basePower: 1, name: "Rapid Fire", desc: "+1 Auto Click/sec", type: "effect_autoclick" },
+                'crit_chance': { level: 0, baseCost: 1000, basePower: 1, name: "Crit Chance", desc: "+1% Chance for Double Damage", type: "effect_crit" },
                 'passive_mult': { level: 0, baseCost: 10000, basePower: 0.05, name: "Income Multiplier", desc: "+5% to ALL earnings", type: "effect_mult" },
-                'offline_generator': { level: 0, baseCost: 15000, basePower: 0.5, name: "Offline Generator", desc: "+50% Offline Earnings", type: "effect_offline" },
-                'cost_optimizer': { level: 0, baseCost: 50000, basePower: 0.02, name: "Cost Optimizer", desc: "-2% Upgrade Costs", type: "effect_discount" }
+                'discount': { level: 0, baseCost: 50000, basePower: 0.02, name: "Cheaper Upgrades", desc: "-2% Upgrade Costs", type: "effect_discount" }
             },
             
             lastSave: Date.now(),
@@ -328,14 +323,13 @@ class RoboClicker {
     // --- GAMEPLAY LOGIC ---
 
     clickHero(event) {
-        // Critical Strike Logic
-        const critChance = (this.gameState.upgrades['crit_strike'].level * this.gameState.upgrades['crit_strike'].basePower) / 100;
-        const critMult = 2 + (this.gameState.upgrades['crit_overload'].level * this.gameState.upgrades['crit_overload'].basePower);
+        // Critical Chance Logic
+        const critChance = (this.gameState.upgrades['crit_chance'].level * this.gameState.upgrades['crit_chance'].basePower) / 100;
         let isCrit = Math.random() < critChance;
         
         let amount = this.getClickPower();
         if (isCrit) {
-            amount *= critMult;
+            amount *= 2; // Double Damage
         }
 
         // Midas Chip Logic
@@ -352,8 +346,7 @@ class RoboClicker {
         
         // EVOLUTION MECHANIC
         // Add XP per click
-        const xpBoost = this.gameState.upgrades['xp_accelerator'].level * this.gameState.upgrades['xp_accelerator'].basePower;
-        this.gameState.evolution.xp += 1 * (1 + xpBoost);
+        this.gameState.evolution.xp += 1;
         if (this.gameState.evolution.xp >= this.gameState.evolution.maxXp) {
             this.evolveRobot();
         }
@@ -492,7 +485,7 @@ class RoboClicker {
     }
 
     getClickPower() {
-        return 1 + (this.gameState.upgrades['cursor'].level * this.gameState.upgrades['cursor'].basePower) + (this.gameState.upgrades['click_efficiency'].level * this.gameState.upgrades['click_efficiency'].basePower);
+        return 1 + (this.gameState.upgrades['cursor'].level * this.gameState.upgrades['cursor'].basePower);
     }
 
     getAutoPower() {
@@ -522,7 +515,7 @@ class RoboClicker {
     getUpgradeCost(key) {
         const upgrade = this.gameState.upgrades[key];
         // Discount Upgrade
-        const discountLevel = this.gameState.upgrades['cost_optimizer'].level;
+        const discountLevel = this.gameState.upgrades['discount'].level;
         const discountPct = Math.min(0.50, discountLevel * 0.02); // Max 50% discount
         
         let cost = Math.floor(upgrade.baseCost * Math.pow(1.4, upgrade.level));
@@ -699,17 +692,19 @@ class RoboClicker {
         const icons = {
             'cursor': '🖱️',
             'auto_clicker': '🤖',
-            'crit_strike': '🎯',
-            'click_efficiency': '⚡',
-            'xp_accelerator': '🧠',
-            'crit_overload': '💥',
-            'rapid_fire': '🔥',
+            // 'xp_boost': '🧠', // Removed
+            'crit_chance': '🎯',
+            'auto_cash_1': '⚙️',
             'passive_mult': '⚡',
-            'offline_generator': '🔋',
-            'cost_optimizer': '🏷️'
+            'discount': '🏷️',
+            'midas_chip': '🏺',
+            'auto_cash_2': '🏭'
         };
 
         for (const [key, upgrade] of Object.entries(this.gameState.upgrades)) {
+            // Skip rendering xp_boost
+            if (key === 'xp_boost') continue;
+
             const cost = this.getUpgradeCost(key);
             const canAfford = this.gameState.money >= cost;
             
@@ -1200,10 +1195,7 @@ class RoboClicker {
             // So per second = `autoIncome * mult * tierMult * passiveMult`.
             // Base `mult` is 1 (no ad boost offline).
             
-            const offlineBoost = this.gameState.upgrades['offline_generator'].level * this.gameState.upgrades['offline_generator'].basePower;
-            let totalOffline = Math.floor(autoIncome * tierMult * passiveMult * seconds * 0.5); // 50% efficiency offline
-            totalOffline *= (1 + offlineBoost);
-            totalOffline = Math.floor(totalOffline);
+            const totalOffline = Math.floor(autoIncome * tierMult * passiveMult * seconds * 0.5); // 50% efficiency offline
             
             if (totalOffline > 0) {
                 this.adManager.pendingOfflineAmount = totalOffline;
@@ -1516,10 +1508,10 @@ class RoboClicker {
 
             // Auto-Clicker Upgrade Logic
             const autoClickLvl = this.gameState.upgrades['auto_clicker'].level;
-            const rapidFireLvl = this.gameState.upgrades['rapid_fire'].level;
-            const totalAutoProb = 0.1 * (autoClickLvl + rapidFireLvl);
-            if (totalAutoProb > 0 && Math.random() < totalAutoProb) {
-                 this.clickHero(null);
+            if (autoClickLvl > 0) {
+                if (Math.random() < (0.1 * autoClickLvl)) {
+                     this.clickHero(null);
+                }
             }
 
             // XP Boost Logic REMOVED
