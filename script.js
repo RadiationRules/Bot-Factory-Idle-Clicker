@@ -322,7 +322,7 @@ class RoboClicker {
 
     // --- GAMEPLAY LOGIC ---
 
-    clickHero(event, isAuto = false) {
+    clickHero(event) {
         // Critical Chance Logic
         const critChance = (this.gameState.upgrades['crit_chance'].level * this.gameState.upgrades['crit_chance'].basePower) / 100;
         let isCrit = Math.random() < critChance;
@@ -345,47 +345,32 @@ class RoboClicker {
         this.gameState.totalBotsDeployed++;
         
         // EVOLUTION MECHANIC
-        // Add XP per click (only for manual clicks)
-        if (!isAuto) {
-            this.gameState.evolution.xp += 1;
-            if (this.gameState.evolution.xp >= this.gameState.evolution.maxXp) {
-                this.evolveRobot();
-            }
+        // Add XP per click
+        this.gameState.evolution.xp += 1;
+        if (this.gameState.evolution.xp >= this.gameState.evolution.maxXp) {
+            this.evolveRobot();
         }
 
         // Visuals & Audio
-        if (event || isAuto) { // Show animations for both manual and auto clicks
-            let clickX, clickY;
-            if (event) {
-                clickX = event.clientX;
-                clickY = event.clientY;
-            } else {
-                // For auto clicks, use hero center
-                const heroRect = this.els.hero.getBoundingClientRect();
-                clickX = heroRect.left + heroRect.width / 2;
-                clickY = heroRect.top + heroRect.height / 2;
-            }
-            
-            this.spawnMoneyParticle(amount, clickX, clickY);
-            this.spawnClickRipple(clickX, clickY);
+        if (event) { // Check if triggered by user input for visuals
+            this.spawnMoneyParticle(amount, event.clientX, event.clientY);
+            this.spawnClickRipple(event.clientX, event.clientY); // New Ripple
             this.animateHero();
             
             if (isMidas) {
-                 this.spawnDamageNumber("MIDAS!", clickX, clickY - 80, '#FFD700');
+                 this.spawnDamageNumber("MIDAS!", event.clientX, event.clientY - 80, '#FFD700');
                  this.playNotificationSound();
             } else if (isCrit) {
-                 this.spawnDamageNumber("CRIT!", clickX, clickY - 50, 'red');
+                 this.spawnDamageNumber("CRIT!", event.clientX, event.clientY - 50, 'red');
             }
             
-            // Tutorial End trigger (only for manual)
-            if (!isAuto && this.gameState.isTutorialActive) {
+            // Tutorial End trigger
+            if (this.gameState.isTutorialActive) {
                 this.endTutorial();
             }
             
             // Only play sound on manual click
-            if (!isAuto) {
-                this.playClickSound();
-            }
+            this.playClickSound();
         }
         
         this.updateHUD(); 
@@ -1521,9 +1506,11 @@ class RoboClicker {
                 this.addMoney((autoIncome * mult * tierMult * passiveMult) / 10);
             }
 
+            // Auto-Clicker Upgrade Logic
+            const autoClickLvl = this.gameState.upgrades['auto_clicker'].level;
             if (autoClickLvl > 0) {
                 if (Math.random() < (0.1 * autoClickLvl)) {
-                     this.clickHero(null, true);
+                     this.clickHero(null);
                 }
             }
 
