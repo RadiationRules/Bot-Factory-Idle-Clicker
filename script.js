@@ -57,10 +57,8 @@ class RoboClicker {
                 'cursor': { level: 0, baseCost: 10, basePower: 1, name: "Stronger Clicks", desc: "+1 Click Value", type: "click" },
                 'auto_clicker': { level: 0, baseCost: 100, basePower: 1, name: "Auto Clicker", desc: "Clicks once every second", type: "effect_autoclick" },
                 'crit_chance': { level: 0, baseCost: 1000, basePower: 1, name: "Crit Chance", desc: "+1% Chance for Double Damage", type: "effect_crit" },
-                'auto_cash_1': { level: 0, baseCost: 2500, basePower: 50, name: "Basic Factory", desc: "+50 Auto Cash/sec", type: "auto" },
                 'passive_mult': { level: 0, baseCost: 10000, basePower: 0.05, name: "Income Multiplier", desc: "+5% to ALL earnings", type: "effect_mult" },
-                'discount': { level: 0, baseCost: 50000, basePower: 0.02, name: "Cheaper Upgrades", desc: "-2% Upgrade Costs", type: "effect_discount" },
-                'auto_cash_2': { level: 0, baseCost: 150000, basePower: 1000, name: "Super Factory", desc: "+1,000 Auto Cash/sec", type: "auto" }
+                'discount': { level: 0, baseCost: 50000, basePower: 0.02, name: "Cheaper Upgrades", desc: "-2% Upgrade Costs", type: "effect_discount" }
             },
             
             lastSave: Date.now(),
